@@ -16,6 +16,6 @@ CONFIG.PY IS THE CONFIGURATION FILE.
 IF YOU DELETE IT, THE GAME WILL BREAK.
 SO TRY NOT TO DELETE CONFIG.PY
 
-          *DO NOT DISTRIBUTE*
+          DO NOT DISTRIBUTE
 Unless given written permission by Sam Spence,
      which must be signed by Sam Spence.
