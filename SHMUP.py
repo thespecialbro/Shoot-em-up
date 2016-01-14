@@ -450,7 +450,7 @@ class Powerup(pygame.sprite.Sprite):
 background = pygame.image.load(os.path.join(img_folder, 'starfield.png')).convert()
 background_rect = background.get_rect()
 
-background_boss = pygame.image.load(os.path.join(img_folder, 'starfield_boss.png')).convert()
+background_boss = pygame.image.load(os.path.join(img_folder, 'starfield_space.png')).convert()
 background_boss_rect = background.get_rect()
 
 # Player images
@@ -496,6 +496,8 @@ for snd in ['explode.wav', 'explode1.wav', 'explode2.wav']:
 # Music (doesn't work when made into an executable :/)
 pygame.mixer.music.load(os.path.join(snd_folder, 'melodything.ogg'))
 pygame.mixer.music.set_volume(config.music_volume)
+#pygame.mixer.music.queue(os.path.join(snd_folder, 'pleppy.ogg'))
+#pygame.mixer.music.queue(os.path.join(snd_folder, 'traptest.ogg'))
 pygame.mixer.music.play(loops=-1)
 
 #menu() # Doesn't work as of now
