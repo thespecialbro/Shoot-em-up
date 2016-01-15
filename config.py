@@ -11,7 +11,7 @@ It will break the game.
 # ----- Volume ----- #
 
 # 0.0 to 1.0
-music_volume = 0.0 # 0.4
+music_volume = 0.4 # 0.4
 sound_volume = 0.5 # 0.5
 
 
@@ -33,5 +33,7 @@ debug = False # False
 # 0.5 to 2.0
 difficulty = 1.0 # 1.0
 
+menu = False # True
+
 # Shield recharging
-shield_recharge = True # True
+shield_recharge = False # False
