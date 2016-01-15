@@ -10,22 +10,10 @@ import time
 
 try:
     import pygame
-except Exception:
+except ImportError:
     print('This game requires Pygame to work!')
     time.sleep(5)
     raise SystemExit
-
-try:
-    import pgu
-    from pgu.gui.const import *
-except ImportError:
-    print('This game requires PGU to work!')
-#    time.sleep(5)
-#    raise SystemExit
-
-import random
-import os
-import sys
 
 try:
     import config
@@ -33,6 +21,18 @@ except ImportError:
     print('Did you remember to NOT delete the config.py file?')
     time.sleep(5)
     raise SystemExit
+
+import random
+import os
+import sys
+
+if config.menu:
+    try:
+        import pygbutton
+    except ImportError:
+        print('Requires Pygbutton module to work!')
+        time.sleep(5)
+        raise SystemExit
 
 
 # ----- TEST THINGS ----- #
@@ -129,17 +129,8 @@ def startGame():
         newMob()
 
 def menu():   # Broken right now. Investigating solutions
-    global all_sprites
-    app = pgu.gui.App()
-    start_button = pgu.gui.Button('START')
-    start_button.connect(CLICK, startGame)
-    start_button.resize(width = 100, height = 50)
-
-    #quit_button = pgu.gui.Button('QUIT')
-    #quit_button.connect(CLICK, pygame.QUIT
-    #quit_button.resize(width = 100, height = 50)
-
-    app.run(start_button)#, quit_button)
+    global all_sprites, start_button
+    start_button = pygbutton.PygButton((50, 50, 60, 30), 'START')
 
 def drawShieldBar(surf, x, y, pct, color, outline=True):
     # Check if shield percentage is below zero: set it to zero
@@ -500,8 +491,10 @@ pygame.mixer.music.set_volume(config.music_volume)
 #pygame.mixer.music.queue(os.path.join(snd_folder, 'traptest.ogg'))
 pygame.mixer.music.play(loops=-1)
 
-#menu() # Doesn't work as of now
-startGame()
+if config.menu:
+    menu() # Doesn't work as of now
+else:
+    startGame()
 
 # Variables
 score = 0
@@ -525,6 +518,9 @@ while running:
         # Check for closing window
         if event.type == pygame.QUIT:
             running = False
+
+        #if 'click' in start_button.handleEvent(event):
+        #    startGame()
 
         # Keystate object to sheck for keyboard events
         keystate = pygame.key.get_pressed()
@@ -633,11 +629,14 @@ while running:
     # Score
     drawText(screen, str(score), 18, WIDTH / 2, 10, WHITE)
 
-    # Shield
+    # Shield, etc
     drawText(screen, str(player.shield) + '/' + str(player.max_shield), 14, 130, 2, CYAN)
     drawShieldBar(screen, 5, 5, player.shield, shield_color)
-
     drawLaserCharge(screen, 5, 16, player.laser_pwr, RED)
+
+    # Buttons
+    if config.menu:
+        start_button.draw(screen)
 
     # Debug info
     if config.debug == True:
